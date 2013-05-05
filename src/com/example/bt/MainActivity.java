@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -23,7 +24,9 @@ import android.util.Pair;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -41,35 +44,11 @@ public class MainActivity extends Activity {
 	private ConnectThread ct = null;
 	private int times = 0;
 	private ProgressDialog dialog;
-	private ArrayList<Hashtable> ss = new ArrayList<Hashtable>();
-	private DiyListAdapter adapter;
+	private ArrayList<String> ss = new ArrayList<String>();
+	private ArrayAdapter<String> adapter;
 	public Hashtable<Integer, ConnectedThread> hashConnectedThread = new Hashtable<Integer, ConnectedThread>();
 	private String Address;
-//	Handler myHandler = new Handler() {
-//		public void handleMessage(Message msg) {
-//			int status = Integer.parseInt(msg.getData().getString("v")
-//					.substring(1));
-//			int position = Integer.parseInt(msg.getData().getString("v")
-//					.substring(0, 1));
-//			Hashtable rowData = null;
-//			switch (status) {
-//			case 0:
-//				rowData = (Hashtable) ss.get(position).clone();
-//				rowData.put("status", "未连接");
-//				rowData.put("pic", "");
-//				break;
-//			case 1:
-//				rowData = (Hashtable) ss.get(position).clone();
-//				rowData.put("status", "已连接");
-//				rowData.put("pic", "@drawable/tip");
-//				break;
-//			}
-//			ss.set(position, rowData);
-//			dialog.cancel();
-//			super.handleMessage(msg);
-//			Reset();
-//		}
-//	};
+	private Dialog dialogTip;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,37 +74,28 @@ public class MainActivity extends Activity {
 				rowData.put("name", device.getName());
 				rowData.put("currentStatus", "close");
 				rowData.put("pic", "");
-				ss.add(rowData);
-//				mBluetoothAdapter.cancelDiscovery();
-//				new Thread(new ConnectThread(device, MainActivity.this,
-//						position)).start();
+//				ss.add(rowData);
+				ss.add(device.getName());
+				// mBluetoothAdapter.cancelDiscovery();
+				// new Thread(new ConnectThread(device, MainActivity.this,
+				// position)).start();
 				position++;
 			}
 		}
 
-		adapter = new DiyListAdapter(c, R.layout.adapter, ss);
+		adapter = new ArrayAdapter<String>(c, android.R.layout.simple_list_item_1, ss);
 		Reset();
-
-		ls.setDivider(null);
 		ls.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int pos,
 					long id) {
-				Intent intent=new Intent();
-				Bundle b = new Bundle();
-				b.putString("address", pairedDevices[pos].getAddress());
-				b.putString("name", pairedDevices[pos].getName());
-				b.putInt("position", pos);
-	            intent.putExtras(b); 
-	            //从Activity IntentTest跳转到Activity IntentTest01 
-	            intent.setClass(MainActivity.this, DetailActivity.class); 
-	            //启动intent的Activity 
-	            MainActivity.this.startActivity(intent); 
+				dialogTip = new Tip(MainActivity.this, R.style.TipDialog);
+				dialogTip.show();
 			}
 		});
 
-//		dialog = ProgressDialog
-//				.show(MainActivity.this, "", "正在连接蓝牙设备...", true);
+		// dialog = ProgressDialog
+		// .show(MainActivity.this, "", "正在连接蓝牙设备...", true);
 	}
 
 	private void Reset() {

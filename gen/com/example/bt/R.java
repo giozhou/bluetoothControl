@@ -31,10 +31,12 @@ public final class R {
     }
     public static final class id {
         public static final int MyAdapter_TextView_info=0x7f080002;
-        public static final int action_settings=0x7f080008;
+        public static final int action_settings=0x7f08000a;
         public static final int button1=0x7f080006;
         public static final int imageView1=0x7f080003;
         public static final int listView1=0x7f080001;
+        public static final int progressBar1=0x7f080009;
+        public static final int switch1=0x7f080008;
         public static final int switch2=0x7f080007;
         public static final int textView1=0x7f080000;
         public static final int textView2=0x7f080005;
@@ -44,6 +46,7 @@ public final class R {
         public static final int activity_main=0x7f030000;
         public static final int adapter=0x7f030001;
         public static final int detail=0x7f030002;
+        public static final int tip=0x7f030003;
     }
     public static final class menu {
         public static final int main=0x7f070000;
@@ -58,11 +61,13 @@ public final class R {
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
         
          */
         public static final int AppBaseTheme=0x7f060000;
@@ -70,6 +75,6 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f060001;
-        public static final int TitleTip=0x7f060002;
+        public static final int TipDialog=0x7f060002;
     }
 }
